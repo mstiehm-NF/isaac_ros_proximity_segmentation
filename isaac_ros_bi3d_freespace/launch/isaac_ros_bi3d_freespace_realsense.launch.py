@@ -42,7 +42,7 @@ def generate_launch_description():
             description='The maximum number of disparity values given for Bi3D inference'),
         DeclareLaunchArgument(
             'base_link_frame',
-            default_value='base_link',
+            default_value='camera_link',
             description='The name of the tf2 frame corresponding to the origin of the robot base'),
         DeclareLaunchArgument(
             'camera_frame',
@@ -93,8 +93,8 @@ def generate_launch_description():
                 'segnet_engine_file_path': segnet_engine_file_path,
                 'max_disparity_values': max_disparity_values}],
         remappings=[
-            ('left_image_bi3d', 'infra1/image_rect_raw'),
-            ('right_image_bi3d', 'infra2/image_rect_raw'),
+            ('left_image_bi3d', 'camera/infra1/image_rect_raw'),
+            ('right_image_bi3d', 'camera/infra2/image_rect_raw'),
             ('bi3d_node/bi3d_output', 'bi3d_mask')])
 
     image_format_converter_node_left = ComposableNode(
@@ -106,7 +106,7 @@ def generate_launch_description():
         }],
         remappings=[
             ('image_raw', 'infra1/image_rect_raw_mono'),
-            ('image', 'infra1/image_rect_raw')]
+            ('image', 'camera/infra1/image_rect_raw')]
     )
 
     image_format_converter_node_right = ComposableNode(
@@ -118,7 +118,7 @@ def generate_launch_description():
         }],
         remappings=[
             ('image_raw', 'infra2/image_rect_raw_mono'),
-            ('image', 'infra2/image_rect_raw')]
+            ('image', 'camera/infra2/image_rect_raw')]
     )
 
     freespace_segmentation_node = ComposableNode(
@@ -151,21 +151,6 @@ def generate_launch_description():
             'rotation.w': 1.0
         }])
 
-    # RealSense
-    realsense_config_file_path = os.path.join(
-        get_package_share_directory('isaac_ros_bi3d'),
-        'config', 'realsense.yaml'
-    )
-
-    realsense_node = ComposableNode(
-        package='realsense2_camera',
-        plugin='realsense2_camera::RealSenseNodeFactory',
-        parameters=[realsense_config_file_path],
-        remappings=[
-            ('infra1/image_rect_raw', 'infra1/image_rect_raw_mono'),
-            ('infra2/image_rect_raw', 'infra2/image_rect_raw_mono')
-        ]
-    )
 
     container = ComposableNodeContainer(
         name='bi3d_container',
@@ -176,8 +161,7 @@ def generate_launch_description():
                                       image_format_converter_node_left,
                                       image_format_converter_node_right,
                                       freespace_segmentation_node,
-                                      tf_publisher,
-                                      realsense_node],
+                                      tf_publisher],
         output='screen',
         remappings=[
             ('left_image_bi3d', 'infra1/image_rect_raw'),
