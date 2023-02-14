@@ -93,8 +93,8 @@ def generate_launch_description():
                 'segnet_engine_file_path': segnet_engine_file_path,
                 'max_disparity_values': max_disparity_values}],
         remappings=[
-            ('left_image_bi3d', 'camera/infra1/image_rect_raw'),
-            ('right_image_bi3d', 'camera/infra2/image_rect_raw'),
+            ('left_image_bi3d', 'infra1/image_rect_raw'),
+            ('right_image_bi3d', 'infra2/image_rect_raw'),
             ('bi3d_node/bi3d_output', 'bi3d_mask')])
 
     image_format_converter_node_left = ComposableNode(
@@ -105,8 +105,8 @@ def generate_launch_description():
                 'encoding_desired': 'rgb8',
         }],
         remappings=[
-            ('image_raw', 'infra1/image_rect_raw_mono'),
-            ('image', 'camera/infra1/image_rect_raw')]
+            ('image_raw', 'camera/infra1/image_rect_raw'),
+            ('image', 'infra1/image_rect_raw')]
     )
 
     image_format_converter_node_right = ComposableNode(
@@ -117,8 +117,8 @@ def generate_launch_description():
                 'encoding_desired': 'rgb8',
         }],
         remappings=[
-            ('image_raw', 'infra2/image_rect_raw_mono'),
-            ('image', 'camera/infra2/image_rect_raw')]
+            ('image_raw', 'camera/infra2/image_rect_raw'),
+            ('image', 'infra2/image_rect_raw')]
     )
 
     freespace_segmentation_node = ComposableNode(
@@ -144,7 +144,7 @@ def generate_launch_description():
             'child_frame_id': 'camera_link',
             'translation.x': 0.0,
             'translation.y': 0.0,
-            'translation.z': 0.1,
+            'translation.z': 1.0,
             'rotation.x': 0.0,
             'rotation.y': 0.0,
             'rotation.z': 0.0,
