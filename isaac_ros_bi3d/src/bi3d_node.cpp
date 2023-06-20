@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: NVIDIA CORPORATION & AFFILIATES
-// Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// Copyright (c) 2022-2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ constexpr char INPUT_RIGHT_IMAGE_TOPIC_NAME[] = "right_image_bi3d";
 
 constexpr char INPUT_DISPARITY_COMPONENT_KEY[] = "disparity_roundrobin/data_receiver";
 
-constexpr char OUTPUT_BI3D_KEY[] = "bi3d_output_vault/vault";
+constexpr char OUTPUT_BI3D_KEY[] = "bi3d_output_sink/sink";
 constexpr char OUTPUT_BI3D_DEFAULT_TENSOR_FORMAT[] = "nitros_disparity_image_32FC1";
 constexpr char OUTPUT_BI3D_TOPIC_NAME[] = "bi3d_node/bi3d_output";
 
@@ -61,12 +61,12 @@ constexpr char PACKAGE_NAME[] = "isaac_ros_bi3d";
 const uint64_t BI3D_BLOCK_SIZE = 2211840;
 
 const std::vector<std::pair<std::string, std::string>> EXTENSIONS = {
-  {"isaac_ros_nitros", "gxf/std/libgxf_std.so"},
-  {"isaac_ros_nitros", "gxf/cuda/libgxf_cuda.so"},
-  {"isaac_ros_nitros", "gxf/multimedia/libgxf_multimedia.so"},
-  {"isaac_ros_nitros", "gxf/libgxf_synchronization.so"},
-  {"isaac_ros_nitros", "gxf/bi3d/libgxf_cvcore_bi3d.so"},
-  {"isaac_ros_nitros", "gxf/bi3d/libgxf_bi3d_postprocessor.so"}
+  {"isaac_ros_gxf", "gxf/lib/std/libgxf_std.so"},
+  {"isaac_ros_gxf", "gxf/lib/cuda/libgxf_cuda.so"},
+  {"isaac_ros_gxf", "gxf/lib/multimedia/libgxf_multimedia.so"},
+  {"isaac_ros_gxf", "gxf/lib/libgxf_synchronization.so"},
+  {"isaac_ros_bi3d", "gxf/lib/bi3d/libgxf_cvcore_bi3d.so"},
+  {"isaac_ros_bi3d", "gxf/lib/bi3d/libgxf_bi3d_postprocessor.so"}
 };
 const std::vector<std::string> PRESET_EXTENSION_SPEC_NAMES = {
   "isaac_ros_bi3d",

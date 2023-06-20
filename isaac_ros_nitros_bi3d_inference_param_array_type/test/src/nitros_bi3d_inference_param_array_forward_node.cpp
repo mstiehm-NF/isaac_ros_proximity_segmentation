@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: NVIDIA CORPORATION & AFFILIATES
-// Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// Copyright (c) 2022-2023 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public:
               .use_compatible_format_only = true,
             }
           },
-          {"vault/vault",
+          {"sink/sink",
             {
               .type = NitrosPublisherSubscriberType::NEGOTIATED,
               .qos = rclcpp::QoS(1),
@@ -68,10 +68,10 @@ public:
       {},
       // Extension so file list
         {
-          {"isaac_ros_nitros", "gxf/std/libgxf_std.so"},
-          {"isaac_ros_nitros", "gxf/cuda/libgxf_cuda.so"},
-          {"isaac_ros_nitros", "gxf/serialization/libgxf_serialization.so"},
-          {"isaac_ros_nitros", "gxf/libgxf_message_compositor.so"}
+          {"isaac_ros_gxf", "gxf/lib/std/libgxf_std.so"},
+          {"isaac_ros_gxf", "gxf/lib/cuda/libgxf_cuda.so"},
+          {"isaac_ros_gxf", "gxf/lib/serialization/libgxf_serialization.so"},
+          {"isaac_ros_gxf", "gxf/lib/libgxf_message_compositor.so"}
         },
       // Test node package name
       PACKAE_NAME)
@@ -79,7 +79,7 @@ public:
     std::string compatible_format = declare_parameter<std::string>("compatible_format", "");
     if (!compatible_format.empty()) {
       config_map_["forward/input"].compatible_data_format = compatible_format;
-      config_map_["vault/vault"].compatible_data_format = compatible_format;
+      config_map_["sink/sink"].compatible_data_format = compatible_format;
     }
 
     registerSupportedType<nvidia::isaac_ros::nitros::NitrosBi3DInferenceParamArray>();
